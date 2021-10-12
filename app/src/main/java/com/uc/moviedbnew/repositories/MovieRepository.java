@@ -1,12 +1,12 @@
 package com.uc.moviedbnew.repositories;
 
-import android.graphics.Movie;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.uc.moviedbnew.helper.Const;
 import com.uc.moviedbnew.model.Movies;
+import com.uc.moviedbnew.model.NowPlaying;
 import com.uc.moviedbnew.retrofit.ApiService;
 
 import retrofit2.Call;
@@ -39,6 +39,24 @@ public class MovieRepository {
             @Override
             public void onFailure(Call<Movies> call, Throwable t) {
                 Log.e(TAG, "onFailure: "+t.toString());
+            }
+        });
+
+        return result;
+    }
+
+    public MutableLiveData<NowPlaying> getNowPlayingData(){
+        final MutableLiveData<NowPlaying> result = new MutableLiveData<>();
+
+        ApiService.endPoints().getNowPlaying(Const.API_KEY).enqueue(new Callback<NowPlaying>() {
+            @Override
+            public void onResponse(Call<NowPlaying> call, Response<NowPlaying> response) {
+                result.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<NowPlaying> call, Throwable t) {
+
             }
         });
 

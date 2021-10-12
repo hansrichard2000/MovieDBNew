@@ -1,6 +1,7 @@
 package com.uc.moviedbnew.retrofit;
 
 import com.uc.moviedbnew.model.Movies;
+import com.uc.moviedbnew.model.NowPlaying;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,6 +13,11 @@ public interface ApiEndPoints {
     @GET("movie/{movie_id}")
     Call<Movies> getMovieById(
       @Path("movie_id") String movieId,
+      @Query("api_key") String apiKey
+    );
+
+    @GET("movie/now_playing")
+    Call<NowPlaying> getNowPlaying(
       @Query("api_key") String apiKey
     );
 

@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
 import com.uc.moviedbnew.R;
+import com.uc.moviedbnew.helper.Const;
 import com.uc.moviedbnew.model.Movies;
 import com.uc.moviedbnew.viewModel.MovieViewModel;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_hit;
     private TextInputLayout til_movie_id;
     private TextView txt_show;
+    private ImageView img_poster;
     private static final String TAG = "MainActivity";
     private static final String TEXT_CONTENTS = "TextContent";
     private static final String TEXT_CONTENTS2 = "TextContent2";
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(MainActivity.this).get(MovieViewModel.class);
         txt_show = findViewById(R.id.txt_show_main);
         til_movie_id = findViewById(R.id.til_movie_id_main);
+        img_poster = findViewById(R.id.img_poster_main);
         btn_hit = findViewById(R.id.btn_submit_main);
         btn_hit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         public void onChanged(Movies movies) {
             try {
                 String title = movies.getTitle();
+                String img_path = movies.getPoster_path().toString();
+                String full_path = Const.BASE_IMG_URL + img_path;
+                Glide.with(MainActivity.this).load(full_path).into(img_poster);
                 txt_show.setText(title);
             }catch (Exception e){
                 txt_show.setText("Unavailable");
